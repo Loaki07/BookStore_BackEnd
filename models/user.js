@@ -1,0 +1,108 @@
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      minlength: [3, 'A Minimum if 3 characters is required'],
+      required: true,
+    },
+    lastName: {
+      type: String,
+      minlength: [3, 'A Minimum if 3 characters is required'],
+      required: true,
+    },
+    emailId: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        'Please add a valid email',
+      ],
+    },
+    password: {
+      type: String,
+      minlength: [6, 'A Minimum of 6 characters is required'],
+      required: true,
+      select: true,
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+// Encrypt password using bcrypt
+userSchema.pre('save', async function () {
+  const saltRounds = await bcrypt.getSalt(5);
+  this.password = await bcrypt.hash(this.password, saltRounds);
+});
+
+// Match user entered password to hashed password in database
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return bcrypt.compare(enteredPassword, this.password);
+};
+
+const User = mongoose.model('User', userSchema);
+
+class UserModel {
+  createUser = (data) => {
+    const { firstName, lastName, emailId, password, isEmailVerified } = data;
+    return User.create({
+      firstName,
+      lastName,
+      emailId,
+      password,
+      isEmailVerified,
+    });
+  };
+
+  getAllUsers = () => {
+    return User.find();
+  };
+
+  getProtectedUser = (id) => {
+    return User.findById(id);
+  };
+
+  findOne = (fields) => {
+    return User.findOne(fields);
+  };
+
+  saveUser = (user) => {
+    return user.save;
+  };
+
+  updateUser = (id, updatedUserObject) => {
+    return User.findOneAndUpdate(
+      id,
+      {
+        $set: updatedUserObject,
+      },
+      {
+        new: true,
+        useFindAndModify: false,
+      }
+    );
+  };
+
+  saveUserWithoutValidation = (user) => {
+    return user.save({ validateBeforeSave: false });
+  };
+
+  clearResetFields = (user) => {
+    (user.resetPasswordToken = undefined), (user.resetPasswordExpire = undefined);
+  };
+
+  findMultipleUsers = (fields) => {
+    return User.find(fields);
+  };
+}
