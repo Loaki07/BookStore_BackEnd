@@ -1,5 +1,6 @@
 import cors from 'cors';
 import dotenv from 'dotenv/config.js';
+import logger from './config/logger.js';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -35,5 +36,5 @@ app.use('*', (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}...`);
-  // logger.info(`Listening on port ${process.env.PORT}...`);
+  logger.info(`Listening on port ${process.env.PORT}...`);
 });
