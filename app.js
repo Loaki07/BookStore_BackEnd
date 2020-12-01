@@ -1,5 +1,6 @@
 import cors from 'cors';
-import dotenv from 'dotenv/config.js';
+import './config/dbEvents.js'
+import 'dotenv/config.js';
 import logger from './config/logger.js';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -10,6 +11,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.get('/', (req, res) => {
+  res.status(200).send({
+    success: true,
+    message: 'Welcome to Book Store Application',
+  });
+});
 
 // Handler for Global Errors
 app.use((err, req, res, next) => {
