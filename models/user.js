@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     firstName: {
       type: String,
@@ -97,10 +97,6 @@ class UserModel {
 
   saveUserWithoutValidation = (user) => {
     return user.save({ validateBeforeSave: false });
-  };
-
-  clearResetFields = (user) => {
-    (user.resetPasswordToken = undefined), (user.resetPasswordExpire = undefined);
   };
 
   findMultipleUsers = (fields) => {
