@@ -1,8 +1,8 @@
 import validation from '../middleware/validation.js';
 import UserService from '../services/userService.js';
 import logger from '../config/logger.js';
-import { getSignedJwtToken } from '../utility/tokens.js';
-const { registerNewUser, logInByUserName } = new UserService();
+import { getSignedJwtToken, verifyEmailToken } from '../utility/tokens.js';
+const { registerNewUser, logInByUserName, updateUserInDb } = new UserService();
 const { validateUserRegistration, validateUserLogIn } = new validation();
 
 class UserController {
@@ -67,6 +67,33 @@ class UserController {
       responseData.message = error.message;
       logger.error(error.message);
       // console.log(error.stack);
+      res.status(500).send(responseData);
+    }
+  };
+
+  /**
+   * @description Verifing the email using JWT and email verification is confirmed
+   * @route GET /fundooapp/verify-email/:token
+   * @param {object} req
+   * @param {object} res
+   */
+  emailVerification = async (req, res) => {
+    const responseData = {};
+    try {
+      const result = verifyEmailToken(req.params.token);
+      updateUserInDb(result.emailId, {
+        isEmailVerified: true,
+      });
+      logger.info('User EmailId is Verified');
+      responseData.success = true;
+      responseData.message = 'Successfully Verified Email!';
+      logger.info(responseData.message);
+      res.status(200).send(responseData);
+    } catch (error) {
+      responseData.success = false;
+      responseData.message = error.message;
+      logger.error(error.message);
+      console.log(error.stack);
       res.status(500).send(responseData);
     }
   };

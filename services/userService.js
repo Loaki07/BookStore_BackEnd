@@ -38,6 +38,14 @@ class UserService {
     }
     return foundUser;
   };
+
+  updateUserInDb = async (id, updatedUserObject) => {
+    return updateUser(id, updatedUserObject);
+  };
+
+  findOne = (dataObject) => {
+    return findOne(dataObject);
+  };
 }
 
 export default UserService;
