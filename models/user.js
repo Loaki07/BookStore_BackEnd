@@ -4,12 +4,7 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    firstName: {
-      type: String,
-      minlength: [3, 'A Minimum if 3 characters is required'],
-      required: true,
-    },
-    lastName: {
+    fullName: {
       type: String,
       minlength: [3, 'A Minimum if 3 characters is required'],
       required: true,
@@ -32,6 +27,10 @@ const userSchema = new Schema(
     isEmailVerified: {
       type: Boolean,
       default: false,
+    },
+    mobileNumber: {
+      type: Number,
+      required: true,
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
@@ -56,12 +55,12 @@ const User = mongoose.model('User', userSchema);
 
 class UserModel {
   createUser = (data) => {
-    const { firstName, lastName, emailId, password, isEmailVerified } = data;
+    const { fullName, emailId, password, mobileNumber, isEmailVerified } = data;
     return User.create({
-      firstName,
-      lastName,
+      fullName,
       emailId,
       password,
+      mobileNumber,
       isEmailVerified,
     });
   };

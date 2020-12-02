@@ -7,10 +7,10 @@ class Validation {
    */
   validateUserRegistration = (user) => {
     const validateObject = Joi.object({
-      firstName: Joi.string().min(3).required(),
-      lastName: Joi.string().min(3).required(),
+      fullName: Joi.string().min(3).required(),
       emailId: Joi.string().email().lowercase().required(),
       password: Joi.string().min(6).required(),
+      mobileNumber: Joi.number().required(),
     });
 
     return validateObject.validateAsync(user);

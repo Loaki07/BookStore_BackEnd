@@ -5,6 +5,7 @@ import { getSignedEmailVerificationToken } from '../utility/tokens.js';
 const { sendMailNotification } = new SendEmail();
 import UserService from '../services/userService.js';
 import { UserModel } from '../models/user.js';
+import ErrorResponse from '../utility/errorResponse.js';
 const { sendToQueue, consumeFromQueue } = new RabbitMQ();
 const { findOne } = new UserService();
 
@@ -19,6 +20,10 @@ const verifyEmail = async (req, res, next) => {
   try {
     const { emailId } = req.body;
     const user = await findOne({ emailId });
+    if (!user) {
+      throw new ErrorResponse('Invalid Email!', 400);
+    }
+
     if (!user.isEmailVerified) {
       let signedVerificationToken = getSignedEmailVerificationToken({
         emailId,

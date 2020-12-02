@@ -8,10 +8,10 @@ POST http://localhost:5000/registration
 Content-Type: application/json
 
 {
-  "firstName": "Kakashi",
-  "lastName": "Hatake",
+  "fullName": "Kakashi",
   "emailId": "kakashi.hatake@gmail.com",
-  "password": "123456"
+  "password": "123456",
+  "mobileNumber": "9876543210"
 }
 
 ### Register New User
@@ -19,21 +19,10 @@ POST http://localhost:5000/registration
 Content-Type: application/json
 
 {
-  "firstName": "Edogawa",
-  "lastName": "Conan",
+  "fullName": "Edogawa Conan",
   "emailId": "edogawa.conan@gmail.com",
-  "password": "123456"
-}
-
-### Register New User
-POST http://localhost:5000/registration
-Content-Type: application/json
-
-{
-  "firstName": "Chorollo",
-  "lastName": "Lucilfier",
-  "emailId": "chorollo.lucilfer@gmail.com",
-  "password": "123456"
+  "password": "123456",
+  "mobileNumber": "9876543210"
 }
 
 ################### LogIn User ###################
@@ -64,7 +53,7 @@ Content-Type: application/json
 
 {
   "emailId": "kakashi.hatake@gmail.com",
-  "password": "12345"
+  "password": "1234985"
 }
 
 ### Log In with incorrect email

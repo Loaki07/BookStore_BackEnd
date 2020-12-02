@@ -5,7 +5,6 @@ const {
   getProtectedUser,
   findOne,
   saveUser,
-  clearResetFields,
   saveUserWithoutValidation,
   updateUser,
 } = new UserModel();

@@ -8,7 +8,7 @@ const { validateUserRegistration, validateUserLogIn } = new validation();
 class UserController {
   /**
    * @description Register User
-   * @route POST /register
+   * @route POST /registration
    * @param {object} req
    * @param {object} res
    */
@@ -16,10 +16,10 @@ class UserController {
     const responseData = {};
     try {
       const userDataObject = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        fullName: req.body.fullName,
         emailId: req.body.emailId,
         password: req.body.password,
+        mobileNumber: req.body.mobileNumber,
       };
       const { error } = await validateUserRegistration(userDataObject);
       if (error) {

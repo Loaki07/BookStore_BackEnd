@@ -24,7 +24,7 @@ class BookController {
       }
       const result = await addNewBook(bookObject);
       responseData.success = true;
-      responseData.message = 'Successfully Created Note!';
+      responseData.message = 'Successfully Added Book!';
       responseData.data = result;
       logger.info(responseData.message);
       res.status(200).send(responseData);
