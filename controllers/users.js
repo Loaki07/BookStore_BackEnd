@@ -1,9 +1,8 @@
-import { User } from '../models/user.js';
 import validation from '../middleware/validation.js';
 import UserService from '../services/userService.js';
 import logger from '../config/logger.js';
 import { getSignedJwtToken } from '../utility/tokens.js';
-const { registerNewUser } = new UserService();
+const { registerNewUser, logInByUserName } = new UserService();
 const { validateUserRegistration } = new validation();
 
 class UserController {
@@ -35,7 +34,35 @@ class UserController {
       responseData.success = false;
       responseData.message = error.message;
       logger.error(error.message);
-      console.log(error.stack);
+      // console.log(error.stack);
+      res.status(500).send(responseData);
+    }
+  };
+
+  /**
+   * @description LogIn User
+   * @route POST /login
+   * @param {object} req
+   * @param {object} res
+   */
+  logInUser = async (req, res) => {
+    const responseData = {};
+    try {
+      const loginUserObject = {
+        emailId: req.body.emailId,
+        password: req.body.password,
+      };
+      this.#validateUserLogIn(loginUserObject);
+      const result = await logInByUserName(loginUserObject);
+      responseData.success = true;
+      responseData.message = 'Successfully Logged In!';
+      logger.info(responseData.message);
+      this.#sendTokenResponse(result, 200, res, responseData);
+    } catch (error) {
+      responseData.success = false;
+      responseData.message = error.message;
+      logger.error(error.message);
+      // console.log(error.stack);
       res.status(500).send(responseData);
     }
   };

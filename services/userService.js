@@ -23,6 +23,21 @@ class UserService {
       .catch((error) => error);
     return createUser(data);
   };
+
+  logInByUserName = async (data) => {
+    const { emailId, password } = data;
+
+    const foundUser = await findOne({ emailId });
+    if (foundUser === null || !foundUser) {
+      throw new Error(`User with email ${emailId}, Not Found!`);
+    }
+    // Check if password matches
+    const isMatch = await foundUser.matchPassword(password);
+    if (!isMatch) {
+      throw new Error(`Incorrect Password`);
+    }
+    return foundUser;
+  };
 }
 
 export default UserService;
