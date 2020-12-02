@@ -23,6 +23,18 @@ class Validation {
     });
     return validateObject.validateAsync(user);
   };
+
+  validateBook = (book) => {
+    const validateObject = Joi.object({
+      author: Joi.string(),
+      title: Joi.string().required(),
+      image: Joi.string(),
+      quantity: Joi.number(),
+      price: Joi.number(),
+      description: Joi.string(),
+    });
+    return validateObject.validateAsync(book);
+  };
 }
 
 export default Validation;

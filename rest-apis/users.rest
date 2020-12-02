@@ -1,0 +1,79 @@
+GET http://localhost:5000/
+
+
+################### Register User ###################
+
+### Register New User
+POST http://localhost:5000/registration
+Content-Type: application/json
+
+{
+  "firstName": "Kakashi",
+  "lastName": "Hatake",
+  "emailId": "kakashi.hatake@gmail.com",
+  "password": "123456"
+}
+
+### Register New User
+POST http://localhost:5000/registration
+Content-Type: application/json
+
+{
+  "firstName": "Edogawa",
+  "lastName": "Conan",
+  "emailId": "edogawa.conan@gmail.com",
+  "password": "123456"
+}
+
+### Register New User
+POST http://localhost:5000/registration
+Content-Type: application/json
+
+{
+  "firstName": "Chorollo",
+  "lastName": "Lucilfier",
+  "emailId": "chorollo.lucilfer@gmail.com",
+  "password": "123456"
+}
+
+################### LogIn User ###################
+
+### Log In
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+  "emailId": "kakashi.hatake@gmail.com",
+  "password": "123456"
+}
+
+### Log In
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+  "emailId": "edogawa.conan@gmail.com",
+  "password": "123456"
+}
+
+################### LogIn User Fail Test Cases ###################
+
+### Log In with incorrect password
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+  "emailId": "kakashi.hatake@gmail.com",
+  "password": "12345"
+}
+
+### Log In with incorrect email
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+  "emailId": "kakashi.fehatake@gmail.com",
+  "password": "123456"
+}
+
+################### # ###################

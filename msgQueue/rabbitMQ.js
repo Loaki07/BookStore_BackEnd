@@ -2,7 +2,7 @@ import amqp from 'amqplib';
 import SendEmail from '../utility/sendEmail.js';
 import logger from '../config/logger.js';
 const { sendMailNotification } = new SendEmail();
-import { ErrorResponse } from '../utility/errorResponse.js';
+import ErrorResponse from '../utility/errorResponse.js';
 
 class RabbitMqMessageQueue {
   /**
