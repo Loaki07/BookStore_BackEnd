@@ -3,7 +3,7 @@ import UserService from '../services/userService.js';
 import logger from '../config/logger.js';
 import { getSignedJwtToken } from '../utility/tokens.js';
 const { registerNewUser, logInByUserName } = new UserService();
-const { validateUserRegistration } = new validation();
+const { validateUserRegistration, validateUserLogIn } = new validation();
 
 class UserController {
   /**
@@ -52,6 +52,10 @@ class UserController {
         emailId: req.body.emailId,
         password: req.body.password,
       };
+      const { error } = await validateUserLogIn(loginUserObject);
+      if (error) {
+        throw new Error(error);
+      }
       this.#validateUserLogIn(loginUserObject);
       const result = await logInByUserName(loginUserObject);
       responseData.success = true;

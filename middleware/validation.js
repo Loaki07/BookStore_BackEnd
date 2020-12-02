@@ -15,6 +15,14 @@ class Validation {
 
     return validateObject.validateAsync(user);
   };
+
+  validateUserLogIn = (user) => {
+    const validateObject = Joi.object({
+      emailId: Joi.string().email().lowercase().required(),
+      password: Joi.string().min(6).required(),
+    });
+    return validateObject.validateAsync(user);
+  };
 }
 
 export default Validation;
