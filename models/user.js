@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 const { Schema } = mongoose;
 
 const userSchema = new mongoose.Schema(
@@ -42,7 +43,7 @@ const userSchema = new mongoose.Schema(
 
 // Encrypt password using bcrypt
 userSchema.pre('save', async function () {
-  const saltRounds = await bcrypt.getSalt(5);
+  const saltRounds = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, saltRounds);
 });
 
@@ -106,3 +107,5 @@ class UserModel {
     return User.find(fields);
   };
 }
+
+export { UserModel, User };
