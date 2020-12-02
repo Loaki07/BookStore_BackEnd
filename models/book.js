@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const storeSchema = new Schema({
+const bookSchema = new Schema({
   author: {
     type: String,
   },
@@ -23,12 +23,12 @@ const storeSchema = new Schema({
   },
 });
 
-const Store = mongoose.model('Store', storeSchema);
+const Book = mongoose.model('Book', bookSchema);
 
-class StoreModel {
+class BookModel {
   create = (data) => {
     const { author, title, image, quantity, price, description } = data;
-    return Store.create({
+    return Book.create({
       author,
       title,
       image,
@@ -39,26 +39,26 @@ class StoreModel {
   };
 
   findAll = () => {
-    return Store.find();
+    return Book.find();
   };
 
   findById = (id) => {
-    return Store.findById(id);
+    return Book.findById(id);
   };
 
   findOne = (fields) => {
-    return Store.findOne(fields);
+    return Book.findOne(fields);
   };
 
   findMultiple = (fields) => {
-    return Store.find(fields);
+    return Book.find(fields);
   };
 
-  updateStore = (id, updatedStoreObject) => {
+  updateBook = (id, updatedBookObject) => {
     return User.findOneAndUpdate(
       id,
       {
-        $set: updatedStoreObject,
+        $set: updatedBookObject,
       },
       {
         new: true,
@@ -68,4 +68,4 @@ class StoreModel {
   };
 }
 
-export { StoreModel, Store };
+export default BookModel;
