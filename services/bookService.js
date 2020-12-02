@@ -3,16 +3,14 @@ import ErrorResponse from '../utility/errorResponse.js';
 const { create, findAll, findById, findOne, findMultiple, updateBook } = new BookModel();
 
 class BookService {
-  addNewBook = (data) => {
-    findOne({
+  addNewBook = async (data) => {
+    const isBookPresent = await findOne({
       title: data.title,
-    })
-      .then((isBookPresent) => {
-        if (isBookPresent) {
-          throw new ErrorResponse('Book already present', 409);
-        }
-      })
-      .catch((error) => error);
+    });
+
+    if (isBookPresent) {
+      throw new ErrorResponse('Book already exists', 409);
+    }
 
     return create(data);
   };
