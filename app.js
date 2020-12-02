@@ -45,7 +45,9 @@ app.use('*', (req, res) => {
  * Server
  */
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}...`);
   logger.info(`Listening on port ${process.env.PORT}...`);
 });
+
+export { server };
