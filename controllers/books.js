@@ -35,6 +35,18 @@ class BookController {
       res.status(error.statusCode || 500).send(responseData);
     }
   };
+
+  getAllBooks = async (req, res) => {
+    const responseData = {};
+    try {
+      const result = await 
+    } catch (error) {
+      responseData.success = false;
+      responseData.message = error.message;
+      logger.error(error.message);
+      res.status(error.statusCode || 500).send(responseData);
+    }
+  }
 }
 
 export default BookController;

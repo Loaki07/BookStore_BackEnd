@@ -14,6 +14,10 @@ class BookService {
 
     return create(data);
   };
+
+  findAllBooks = async () => {
+    const result = findAll
+  }
 }
 
 export default BookService;
