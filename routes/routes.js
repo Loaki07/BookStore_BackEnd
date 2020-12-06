@@ -5,12 +5,15 @@ import BookController from '../controllers/books.js';
 import { verifyEmail } from '../middleware/emailVerification.js';
 
 const { registerUser, logInUser, emailVerification } = new UserController();
-const { addBook } = new BookController();
+const { addBook, getAllBooks } = new BookController();
 
+// User Routes
 router.post('/registration', registerUser);
 router.post('/login', verifyEmail, logInUser);
 router.get('/book-store/verify-email/:token', emailVerification);
 
+// Book Routes
 router.post('/add-book', addBook);
+router.get('/get-all-books', getAllBooks);
 
 export default router;

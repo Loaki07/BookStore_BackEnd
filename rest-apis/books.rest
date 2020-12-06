@@ -1,5 +1,8 @@
 ################### BookStore ###################
 
+### Get all books
+GET http://localhost:5000/get-all-books
+
 ### Add Book
 POST http://localhost:5000/add-book
 Content-Type: application/json

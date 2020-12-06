@@ -16,8 +16,12 @@ class BookService {
   };
 
   findAllBooks = async () => {
-    const result = findAll
-  }
+    try {
+      return await findAll();    
+    } catch (error) {
+      throw new ErrorResponse(error.message, error.statusCode);
+    }
+  };
 }
 
 export default BookService;
