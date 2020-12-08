@@ -4,7 +4,7 @@ import Validation from '../middleware/validation.js';
 import logger from '../config/logger.js';
 
 const { validateBook } = new Validation();
-const { addNewBook, findAllBooks } = new BookService();
+const { addNewBook, findAllBooks, countDocuments, findAllBooksPagination } = new BookService();
 
 class BookController {
   /**
@@ -51,13 +51,18 @@ class BookController {
   getAllBooks = async (req, res) => {
     const responseData = {};
     try {
-      const result = await findAllBooks();
+      const pageSize = 12;
+      const page = Number(req.query.pageNumber) || 1;
+      const count = await countDocuments();
+      const result = await findAllBooksPagination(pageSize, page);
       if (!result || result === null || result.length === 0) {
         throw new ErrorResponse('There are no books in the store', '400');
       }
       responseData.success = true;
       responseData.message = 'Displaying all Books';
       responseData.data = result;
+      responseData.page = page;
+      responseData.pages = Math.ceil(count / pageSize);
       logger.info(responseData.message);
       res.status(200).send(responseData);
     } catch (error) {

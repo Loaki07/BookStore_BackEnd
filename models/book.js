@@ -21,7 +21,7 @@ const bookSchema = new Schema({
   description: {
     type: String,
   },
-}); 
+});
 
 const Book = mongoose.model('Book', bookSchema);
 
@@ -42,6 +42,12 @@ class BookModel {
     return Book.find();
   };
 
+  findAllPagination = (pageSize, page) => {
+    return Book.find()
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+  };
+
   findById = (id) => {
     return Book.findById(id);
   };
@@ -55,7 +61,7 @@ class BookModel {
   };
 
   updateBook = (id, updatedBookObject) => {
-    return User.findOneAndUpdate(
+    return Book.findOneAndUpdate(
       id,
       {
         $set: updatedBookObject,
@@ -66,6 +72,8 @@ class BookModel {
       }
     );
   };
+
+  count = () => Book.countDocuments();
 }
 
 export default BookModel;
